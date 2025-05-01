@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post-Quantum Cryptography App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light p-4">
+    <div class="container">
+        <h2>Post-Quantum Cryptography Demo</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="algorithm" class="form-label">Select KEM Algorithm</label>
+                <select name="algorithm" class="form-select">
+                    <option value="ML-KEM-512" {% if selected_alg == "ML-KEM-512" %}selected{% endif %}>ML-KEM-512</option>
+                    <option value="FrodoKEM-640-AES" {% if selected_alg == "FrodoKEM-640-AES" %}selected{% endif %}>FrodoKEM-640-AES</option>
+                    <option value="BIKE-L1" {% if selected_alg == "BIKE-L1" %}selected{% endif %}>BIKE-L1</option>
+                    <option value="Classic-McEliece-348864" {% if selected_alg == "Classic-McEliece-348864" %}selected{% endif %}>McEliece-348864</option>
+                </select>
+            </div>
+            <button type="submit" name="action" value="generate" class="btn btn-primary">Generate Key Pair</button>
+            <button type="submit" name="action" value="encrypt" class="btn btn-success">Encrypt</button>
+            <button type="submit" name="action" value="decrypt" class="btn btn-warning">Decrypt</button>
+        </form>
+
+        {% if message %}
+        <div class="alert alert-info mt-3">{{ message }}</div>
+        {% endif %}
+
+        {% if result %}
+        <hr>
+        <h4>Results</h4>
+        <p><strong>Public Key:</strong><br><textarea class="form-control" rows="4">{{ result.public_key }}</textarea></p>
+        <p><strong>Private Key:</strong><br><textarea class="form-control" rows="4">{{ result.private_key }}</textarea></p>
+        <p><strong>Ciphertext:</strong><br><textarea class="form-control" rows="3">{{ result.ciphertext }}</textarea></p>
+        <p><strong>Shared Secret (Enc):</strong> {{ result.shared_secret_enc }}</p>
+        <p><strong>Shared Secret (Dec):</strong> {{ result.shared_secret_dec }}</p>
+        <p><strong>Status:</strong> 
+            {% if result.match %}
+              Shared secrets match.
+            {% else %}
+              Shared secrets do not match.
+            {% endif %}
+        </p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
