@@ -28,3 +28,18 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
+```
+### 2. Setup liboqs-python
+```bash
+git clone --recursive https://github.com/open-quantum-safe/liboqs-python.git
+cd liboqs-python
+pip install .
+cd ..
+
+```
+### 3. Run the flask app
+```bash
+python3 app.py
+
+```
+
